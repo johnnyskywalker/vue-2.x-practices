@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shopping Cart - Vue Practice</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <table id="shopping_cart" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" title="全選" @click="toggleSelect" :checked="selectAll"></th>
+                        <th></th>
+                        <th>說明</th>
+                        <th>單價</th>
+                        <th>數量</th>
+                        <th>小計</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in items">
+                        <td><input type="checkbox" title="全選" v-model="item.checked"></td>
+                        <td></td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>
+                            <select name="qty" id="" class="form-control form-control-sm" v-model="item.qty">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </td>
+                        <td>{{ item.price * item.qty }}</td>
+                        <td><button class="btn btn-sm btn-primary" @click="removeItem(item)">X</button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>總計</td>
+                        <td>{{ totalAmount }}</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div><!-- row -->
+</div><!-- container -->
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+
+var mdse = [
+    {
+        checked: true,
+        description: '商品 A',
+        price: 20.0,
+        qty: 3
+    },
+    {
+        checked: true,
+        description: '商品 C',
+        price: 5.0,
+        qty: 2
+    },
+    {
+        checked: false,
+        description: '商品 B',
+        price: 71.0,
+        qty: 3
+    },
+    {
+        checked: true,
+        description: '商品 E',
+        price: 6.0,
+        qty: 4
+    },
+];
+
+var shoppingCart = new Vue({
+    el: '#shopping_cart',
+    data: {
+        items: mdse,
+        checked_items: []
+    },
+    methods: {
+        toggleSelect: function() {
+            var select = this.selectAll;
+            this.items.forEach(function(item) {
+                item.checked = ! select;
+            });
+            this.selectAll = ! select;
+        },
+        removeItem: function (item) {
+            this.items.splice(this.items.indexOf(item), 1);
+        }
+    },
+    computed: {
+        totalAmount: function () {
+            let total = [];
+            this.items.forEach(function (item) {
+                if (item.checked) {
+                    total.push(item.price * item.qty);
+                }
+            });
+
+            return total.reduce(function(total, num){ return total + num }, 0);
+        },
+        selectAll: function () {
+            return this.items.every(function (item) {
+                return item.checked;
+            });
+        }
+    }
+});
+</script>
+</body>
+</html>
