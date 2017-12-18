@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Practices - Lession 2 - Input Number</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<body>
+    <div id="number-control" class="container">
+        <div class="row mt-5">
+            <div class="col-6">
+                <div class="input-group">
+                  <span class="input-group-addon" style="cursor: pointer;" v-on:click="incrNumber">+</span>
+                  <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" v-bind:value="number">
+                  <span class="input-group-addon" style="cursor: pointer;" v-on:click="decrNumber">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+var numberControl = new Vue({
+    el: '#number-control',
+    data: {
+        number: 1,
+        min: 1,
+        max: 5
+    },
+    methods: {
+        incrNumber: function () {
+            // console.log(this.number);
+            this.number++;
+            this.number = Math.min(this.max, this.number);
+        },
+        decrNumber: function () {
+            this.number--;
+            this.number = Math.max(this.min, this.number);
+        }
+    }
+});
+</script>
+</body>
+</html>
