@@ -12,3 +12,7 @@
 ### input-number
 
 輸入數字的控制項，可以加減和限制高低值
+
+### image-preview
+
+切換圖片預覽
