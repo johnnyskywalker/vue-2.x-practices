@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Validation Timer - Vue Practice</title>
+</head>
+<body>
+    <div class="container">
+        <div id="timer" class="row mt-5">
+            <div class="col-2 offset-5 border">
+                <span>{{ timerDisplay }}</span>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-primary btn-sm" v-bind:disabled="isTimerRunning" v-on:click="resetTimer">重設</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+    var timerObj;
+
+    var app = new Vue({
+        el: '#timer',
+        data: {
+            initDuration: 10, // seconds
+            duration: 0, // seconds
+            timerDisplay: "00:00",
+            isTimerRunning: true
+        },
+        created: function () {
+            this.duration = this.initDuration;
+            this.startTimer();
+        },
+        methods: {
+            startTimer () {
+                console.log('開始計時');
+                this.isTimerRunning = true;
+                timerObj = window.setInterval(this.timerTick, 1000);
+                this.timerFormat();
+            },
+            stopTimer () {
+                window.clearInterval(timerObj);
+                timerObj = null;
+                this.isTimerRunning = false;
+                console.log('停止計時');
+            },
+            timerTick () {
+                if (this.duration > 0) {
+                    this.duration--;
+                    this.timerFormat();
+                    console.log(this.timerDisplay);
+                } else {
+                    this.stopTimer();
+                }
+            },
+            timerFormat () {
+                let minutes = Math.floor(this.duration / 60);
+                let seconds = this.duration % 60;
+
+                if (seconds < 10) { seconds = "0" + seconds; }
+                if (minutes < 10) { minutes = "0" + minutes; }
+                this.timerDisplay = minutes + ":" + seconds;
+            },
+            resetTimer () {
+                this.stopTimer();
+                this.duration = this.initDuration;
+                this.startTimer();
+            }
+        }
+    });
+    </script>
+</body>
+</html>
