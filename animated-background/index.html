@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Animated Background - Vue Practice</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        #bg-container {
+            height: 100%;
+            transition: background-color 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+<div id="bg-container"
+     class="border d-flex align-items-stretch"
+     :style="{backgroundColor: currentColor}"
+>
+        <div class="w-50 m-5">
+            <div class="alert text-white" role="alert" style="background-color: #000; opacity: 0.5;">
+                每秒切換一次背景色，隨機選色，執行 60 秒後停止<br>
+                開始和結束都會回歸白色
+                <div class="float-right">{{ timerDisplay }}</div>
+            </div>
+            <button class="btn btn-sm float-right" @click="stopTimer">停止運作</button>
+            <button class="btn btn-sm float-right mr-1" @click="resetTimer">重來一次</button>
+        </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+
+  return color;
+}
+
+var timerObj;
+
+var app = new Vue({
+    el: '#bg-container',
+    data: {
+        index: 0,
+        currentColor: '#fff',
+        initDuration: 60, // seconds
+        duration: 0, // seconds
+        timerDisplay: "00:00",
+        isTimerRunning: true
+    },
+    created: function () {
+        this.duration = this.initDuration;
+        this.startTimer();
+    },
+    methods: {
+        switchColor () {
+            this.currentColor = getRandomColor();
+        },
+        startTimer () {
+            console.log('開始計時');
+            this.isTimerRunning = true;
+            timerObj = window.setInterval(this.timerTick, 1000);
+            this.timerFormat();
+        },
+        stopTimer () {
+            window.clearInterval(timerObj);
+            timerObj = null;
+            this.isTimerRunning = false;
+            this.currentColor = '#fff';
+            console.log('停止計時');
+        },
+        timerTick () {
+            if (this.duration > 0) {
+                this.duration--;
+                this.timerFormat();
+                this.switchColor();
+                console.log(this.timerDisplay + '   ' + this.currentColor);
+            } else {
+                this.stopTimer();
+            }
+        },
+        timerFormat () {
+            let minutes = Math.floor(this.duration / 60);
+            let seconds = this.duration % 60;
+
+            if (seconds < 10) { seconds = "0" + seconds; }
+            if (minutes < 10) { minutes = "0" + minutes; }
+            this.timerDisplay = minutes + ":" + seconds;
+        },
+        resetTimer () {
+            this.stopTimer();
+            this.duration = this.initDuration;
+            this.startTimer();
+        }
+    }
+});
+</script>
+</body>
+</html>

@@ -24,3 +24,8 @@
 ### axios-basic
 
 使用官方推的 axios 庫進行簡單的 GET 操作
+
+### animated-background
+
+validation-timer 的變形
+每秒切換一次背景色，隨機選色，執行 100 秒後停止
