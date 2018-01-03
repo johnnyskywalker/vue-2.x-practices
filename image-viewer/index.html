@@ -18,18 +18,21 @@ html, body {
 
 #main-img {
     max-width: 90%;
+    max-height: 100%;
 }
 </style>
 </head>
 <body>
 
 <div id="app" class="d-flex flex-column p-2 align-items-stretch">
-    <div class="text-white text-center">
-        <button class="btn btn-sm" @click="backward">←</button>
-        {{ page }}
-        <button class="btn btn-sm" @click="forward">→</button>
+    <div class="text-white text-center" style="font-size: 1.5rem;">
+        <a href="#" class="p-3" @click="first"><i class="fas fa-angle-double-left"></i></a>
+        <a href="#" class="p-3" @click="backward"><i class="fas fa-angle-left"></i></a>
+        <div style="display: inline-block; width: 80px; font-size: 1rem;" >{{ page }}</div>
+        <a href="#" class="p-3" @click="forward"><i class="fas fa-angle-right"></i></a>
+        <a href="#" class="p-3" @click="last"><i class="fas fa-angle-double-right"></i></a>
     </div>
-    <div class="my-2 text-center">
+    <div class="my-2 text-center" style="height: 95%;">
         <img id="main-img" @click="forward" :src="imgSrc" alt="">
     </div>
     <div class="text-white text-center"></div>
@@ -38,6 +41,7 @@ html, body {
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="../_assets/axios.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
 <script>
 
 var viewer = new Vue({
@@ -55,6 +59,13 @@ var viewer = new Vue({
         },
         backward: function () {
             this.currentIndex = Math.max((-- this.currentIndex) % this.images.length, 0);
+        },
+
+        first: function () {
+            this.currentIndex = 0;
+        },
+        last: function () {
+            this.currentIndex = this.images.length - 1;
         },
         fetchImages: function () {
             let _this = this;
