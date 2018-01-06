@@ -20,17 +20,25 @@ html, body {
     max-width: 90%;
     max-height: 100%;
 }
+
+.operation-icon {
+    font-size: 1.5rem;
+}
+
+.pagination {
+    font-size: 1rem;
+}
 </style>
 </head>
 <body>
 
 <div id="app" class="d-flex flex-column p-2 align-items-stretch">
-    <div class="text-white text-center" style="font-size: 1.5rem;">
-        <a href="#" class="p-3" @click="first"><i class="fas fa-angle-double-left"></i></a>
-        <a href="#" class="p-3" @click="backward"><i class="fas fa-angle-left"></i></a>
-        <div style="display: inline-block; width: 80px; font-size: 1rem;" >{{ page }}</div>
-        <a href="#" class="p-3" @click="forward"><i class="fas fa-angle-right"></i></a>
-        <a href="#" class="p-3" @click="last"><i class="fas fa-angle-double-right"></i></a>
+    <div class="d-flex text-white justify-content-center">
+        <a href="#" class="py-1 px-3 operation-icon" @click="first"><i class="fas fa-angle-double-left"></i></a>
+        <a href="#" class="py-1 px-3 operation-icon" @click="backward"><i class="fas fa-angle-left"></i></a>
+        <div class="py-1 px-3 pagination align-items-center">{{ page }}</div>
+        <a href="#" class="py-1 px-3 operation-icon" @click="forward"><i class="fas fa-angle-right"></i></a>
+        <a href="#" class="py-1 px-3 operation-icon" @click="last"><i class="fas fa-angle-double-right"></i></a>
     </div>
     <div class="my-2 text-center" style="height: 95%;">
         <img id="main-img" @click="forward" :src="imgSrc" alt="">
