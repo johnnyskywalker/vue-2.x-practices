@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Credit Card Form - Vue Practice</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-xs-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="card">
+                <div class="card-header">
+                    Payment Detail
+                    <i class="fab fa-cc-visa" style="font-size: 1.5rem;"></i>
+                </div>
+                <div class="card-body">
+                    <form id="payment-form" class="" action="" method="post">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="card-number">CARD NUMBER</label>
+                                    <input type="text" class="form-control" id="card-number" placeholder="Valid Card Number" v-model="cardNumber" required>
+                                    <div class="invalid-feedback">Please specify a valid credit card number.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-7">
+                                <div class="form-group">
+                                    <label for="expiration-date">EXPIRATION DATE</label>
+                                    <input type="text" class="form-control" id="expiration-date" placeholder="MM / YY" required>
+                                    <div class="invalid-feedback">Invalid expiration date.</div>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <label for="card-number">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" placeholder="CVV" maxlength="3" required>
+                                    <div class="invalid-feedback">Invalid CVV.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="submit" class="btn btn-success btn-block" value="PAY">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.2/js/all.js"></script>
+
+<script>
+var creditCardModel = new Vue({
+    el: 'payment-form',
+    data: {
+        cardNumber: '',
+        cardExpirationYear: '',
+        cardExpirationMonth: '',
+        cardCVV: ''
+    },
+    methods: {
+        luhnCheck: function () {
+            return true;
+        }
+    }
+});
+</script>
+</body>
+</html>
